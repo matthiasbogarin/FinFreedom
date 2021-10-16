@@ -21,6 +21,7 @@ def login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             if user.is_active:
+                request.session["profile_id"] = Profiles.objects.filter(email=user.email).values('profile_id').first()["profile_id"]
                 response = HttpResponseRedirect('overview')
                 auth_login(request, user)
                 if 'remember' in request.POST and 'on' == request.POST['remember']:
@@ -47,7 +48,16 @@ def logout_view(request):
 
 def overview(request):
     print("reaced the overiew function")
-    return render(request, 'pages/overview.html')
+    print("Profile ID: ", request.session['profile_id'])
+    profile_object = Profiles.objects.filter(profile_id = request.session['profile_id']).values('profile_id', 'first_name', 'last_name')[0]
+    print("Profile Object: ", profile_object)
+    context = {}
+
+    return render(request, 'pages/overview.html', 
+    {
+        'profile_name': profile_object['first_name'] + " " + profile_object['last_name'] , 
+        'profile_id' : profile_object['profile_id']
+    })
 
 def manage(request):
     print("reaced the manage function")

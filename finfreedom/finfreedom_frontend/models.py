@@ -6,7 +6,7 @@ class Profiles(models.Model):
     profile_id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    email = models.CharField(max_length=100)
+    email = models.CharField(max_length=100, unique=True)
     username = models.CharField(max_length=50)
     password = models.CharField(max_length=50)
 

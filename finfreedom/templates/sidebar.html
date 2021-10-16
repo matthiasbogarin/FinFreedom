@@ -3,13 +3,14 @@
 
 {% block content %}
 <div class="row" style="height: 100%"> 
-    <div class="col-3 bg-secondary text-light" style="height: 100%; margin:0; padding: 0; display: flex; flex-direction: column; justify-content: start">
+    <div class="col-3 rounded bg-secondary text-light" style="height: 100%; margin:0; padding: 0; display: flex; flex-direction: column; justify-content: start">
         <div class="row w-100 h-25 text-center mt-3" style="margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-            <div class="col-6 border border-dark rounded w-50 h-75 mb-3">
-                
+            <div class="col-6 border border-dark rounded w-50 h-75 mb-3" style="display: flex; justify-content: center; align-items: center;">
+                <p> Profile Logo </p>
+                <!-- Generic ICON for profile -->
             </div>
             <a href="/profile" class="text-light">
-                <h5>Matthias Bogarin</h5>
+                <h5>{% if profile_name %} {{profile_name}} {% endif %}</h5>
             </a>
         </div>
         <div class="row w-100 h-50 mt-3" style="margin: 0; display: flex; flex-direction: row; justify-content: center;">
@@ -39,7 +40,7 @@
             <a class="nav-link text-dark" href="/logout">Log Out</a>
         </div>
     </div>
-    <div class="col-9" style = "height: 100%;">
+    <div class="col-9" style = "height: 100%; margin: 0; padding: 0;">
         {% block page_elements %}
         {% endblock %}
     </div>
