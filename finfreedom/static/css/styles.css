@@ -1,0 +1,13 @@
+.login-container{
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.circle-container {
+    height: 25px;
+    width: 25px;
+    background-color: darkblue;
+    border-radius: 50%;
+    /* display: inline-block; */
+  }

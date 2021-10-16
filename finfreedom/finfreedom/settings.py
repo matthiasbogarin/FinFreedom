@@ -42,8 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #APPS
-    'finfreedom.apps.FinFreedomConfig',
-    'finfreedom_api.apps.FinFreedomApiConfig',
+    'finfreedom_frontend.apps.FinfreedomFrontendConfig',
+    'finfreedom_api.apps.FinfreedomApiConfig',
+    # 'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -83,7 +84,7 @@ WSGI_APPLICATION = 'finfreedom.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.path.join(BASE_DIR , 'db.sqlite3'),
     }
 }
 
