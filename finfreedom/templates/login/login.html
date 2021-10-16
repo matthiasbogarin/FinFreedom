@@ -3,25 +3,46 @@
 {% block widgets %}
 <div class="row">
     <!-- <img src="{% static 'assets/finfreedom_logo.png' %}"> -->
+    
     <form method="POST">
         {% csrf_token %}
-        <div class="form-group text-light">
-            <label for="username">Username</label>
-            <input class="form-control" type="text" id="username" name="username" required placeholder="Enter your username">
-        </div>
-        <div class="form-group mb-3 text-light">
-            <label for="password">Password</label>
-            <input class="form-control" type="password" id="password" name="password" required placeholder="Enter your password">
-        </div>
-        <!-- <div class="form-group mb-3 text-light">
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="checkbox-signin" name="remember" {% if username %} checked {% endif %}>
-                <label class="custom-control-label" for="checkbox-signin">Remember Me</label>
+        <div class="col-3"></div>
+        <div class="col-6 w-100 h-100">
+            <div class="row">
+                <div class="form-group text-light">
+                    <label for="username">Username</label>
+                    <input class="form-control border border-dark" type="text" id="username" name="username" required placeholder="Enter your username" {% if username %} {{username}} {% endif %}>
+                </div>
+                <div class="form-group text-light float-start">
+                    <label for="password">Password</label>
+                    <input class="form-control border border-dark" type="password" id="password" name="password" required placeholder="Enter your password">
+                </div>
             </div>
-        </div> -->
-        <div class="form-group mb-0 text-center">
-            <button class="btn btn-primary btn-block" type="submit">Log In</button>
+            <div class="row mt-2">
+                <div class="col-6 float-start">
+                    <div class="form-group text-light">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input border border-dark" id="checkbox-signin" name="remember" {% if username %} checked {% endif %}>
+                            <label class="custom-control-label" for="checkbox-signin">Remember Me</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group text-center float-end">
+                        <button class="btn btn-primary btn-block border border-dark" type="submit">Log In</button>
+                    </div>
+                </div>
+            </div>
+            {% for message in messages %}
+    
+                <div class="alert alert-danger">
+                    <a class="close" href="/" data-dismiss="alert">×</a>
+                    {{ message }}
+                </div>
+
+            {% endfor %}
         </div>
+        <div class="col-3"></div>
     </form>
 </div>
 {% endblock %}

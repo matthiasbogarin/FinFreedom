@@ -10,4 +10,10 @@
     background-color: darkblue;
     border-radius: 50%;
     /* display: inline-block; */
-  }
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+}
