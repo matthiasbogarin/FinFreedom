@@ -1,0 +1,47 @@
+{% extends 'wrapper.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row" style="height: 100%"> 
+    <div class="col-3 bg-secondary text-light" style="height: 100%; margin:0; padding: 0; display: flex; flex-direction: column; justify-content: start">
+        <div class="row w-100 h-25 text-center mt-3" style="margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <div class="col-6 border border-dark rounded w-50 h-75 mb-3">
+                
+            </div>
+            <a href="/profile" class="text-light">
+                <h5>Matthias Bogarin</h5>
+            </a>
+        </div>
+        <div class="row w-100 h-50 mt-3" style="margin: 0; display: flex; flex-direction: row; justify-content: center;">
+            <div class="card w-75 h-100">
+                <div class="card-body text-center rounded bg-light">
+                    <ul class="nav" style="display: flex; flex-direction: column; justify-content: space-around;">
+                        <li class="nav-item mt-4 mb-4">
+                            <a class="nav-link text-dark active" aria-current="page" href="/overview">Overview</a>
+                        </li>
+                        <li class="nav-item mb-4">
+                            <a class="nav-link text-dark" href="/manage">Manage</a>
+                        </li>
+                        <li class="nav-item mb-4">
+                            <a class="nav-link text-dark" href="/transactions">Transactions</a>
+                        </li>
+                        <li class="nav-item mb-4">
+                            <a class="nav-link text-dark" href="/subscriptions">Subscriptions</a>
+                        </li>
+                        <li class="nav-item mb-4">
+                            <a class="nav-link text-dark" href="/accounts">Accounts</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row w-100 h-25 text-center" style="margin: 0; display: flex; flex-direction: column; justify-content: center;">
+            <a class="nav-link text-dark" href="/logout">Log Out</a>
+        </div>
+    </div>
+    <div class="col-9" style = "height: 100%;">
+        {% block page_elements %}
+        {% endblock %}
+    </div>
+</div>    
+{% endblock %}

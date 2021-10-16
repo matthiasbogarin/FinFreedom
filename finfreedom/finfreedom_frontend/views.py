@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render, reverse
-from django.contrib.auth import authenticate, login as auth_login, logout
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -40,9 +40,31 @@ def login(request):
 
 
 def logout_view(request):
-    logout(request)
-    # Redirect to a success page.
+    print(request)
+    auth_logout(request)
+    response = HttpResponseRedirect('/')
+    return response
 
 def overview(request):
     print("reaced the overiew function")
     return render(request, 'pages/overview.html')
+
+def manage(request):
+    print("reaced the manage function")
+    return render(request, 'pages/manage.html')
+
+def transactions(request):
+    print("reaced the transactions function")
+    return render(request, 'pages/transactions.html')
+
+def subscriptions(request):
+    print("reaced the subscriptions function")
+    return render(request, 'pages/subscriptions.html')
+
+def accounts(request):
+    print("reaced the accounts function")
+    return render(request, 'pages/accounts.html')
+
+def profile(request):
+    print("reaced the profile function")
+    return render(request, 'pages/profile.html')
