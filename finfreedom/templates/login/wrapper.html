@@ -16,14 +16,21 @@
         <div style="height: 100vh; width: 100vw; padding: 0; margin: 0;">
                 <div class="row m-auto h-100">
                     <div class="col-md-12" style="margin: 0;">
-                        <div class="row bg-dark" style="display: flex; height: 100vh; width: 100vw; margin: 0; padding: 0; justify-content: center; align-items: center;">
+                        <div class="row bg-primary" style="display: flex; height: 100vh; width: 100vw; margin: 0; padding: 0; justify-content: center; align-items: center;">
                             <div class="col-3"></div>
-                            <div class="col-6 h-50">
-                                <div class="text-center">
-                                    <img src="{% static '' %}" class="rounded" alt="...">
+                            <div class="col-6 h-25 w-50">
+                                <h1 class="text-center" >FinFreedom</h1>
+                                <div class="card-body mt-3 border border-light rounded bg-secondary w-100 h-100" style="display: flex; justify-content: center; align-items: center;">
+                                    {% block widgets %}
+                                    {% endblock %}
                                 </div>
-                                <div class="card-body border border-light rounded bg-primary w-100 h-100">
-                                    
+                                <div class="row w-100" style="margin-left: .10rem;">
+                                    <div class="col-6">
+                                        <a href="/forgot_password" class="text-dark float-start"><small>Forgot your password?</small></a>                                        
+                                    </div>
+                                    <div class="col-6">
+                                        <a href="/create_profile" class="text-dark float-end"><small>Create FinFreedom Profile</small></a>                                        
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-3"></div>
