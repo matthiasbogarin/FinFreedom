@@ -21,12 +21,23 @@ def login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             if user.is_active:
+                response = HttpResponseRedirect('overview')
                 auth_login(request, user)
-                return HttpResponseRedirect('overview')
+                if 'remember' in request.POST and 'on' == request.POST['remember']:
+                    response.set_cookie('FinFreedom_user', request.POST['username'], max_age=None)
+                else:
+                    response.delete_cookie('FinFreedom_user')
+                return response
         else:
             messages.error(request,'username or password not correct')
-            return HttpResponseRedirect('/')
+            response = HttpResponseRedirect('/')
+            return response
+    if request.COOKIES.get('FinFreedom_user', False):
+        return render(request, 'login/login.html', {'username': request.COOKIES.get('FinFreedom_user')})
+
     return render(request, 'login/login.html')
+
+
 
 def logout_view(request):
     logout(request)
