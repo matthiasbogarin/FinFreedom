@@ -17,7 +17,7 @@
                 <div class="col-12">
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" maxlength="150" id="email" name="email" class="form-control border border-dark " onchange="check_if_email_exist(this.value);" required>
+                        <input type="email" maxlength="150" id="email" name="email" class="form-control" onchange="check_if_email_exist(this.value);" required>
                         <div id = "alert_email_exists"></div>
                       </div>
                 </div>
@@ -26,13 +26,13 @@
                 <div class="col-6">
                   <div class="form-group">
                       <label for="first_name">First Name</label>
-                      <input type="text" maxlength="150" id="first_name" name="first_name" class="form-control border border-dark " required>
+                      <input type="text" maxlength="150" id="first_name" name="first_name" class="form-control" required>
                   </div>
                 </div>
                 <div class="col-6">
                   <div class="form-group">
                       <label for="last_name">Last Name</label>
-                      <input type="text" maxlength="150" id="last_name" name="last_name" class="form-control border border-dark " required>
+                      <input type="text" maxlength="150" id="last_name" name="last_name" class="form-control" required>
                   </div>
                 </div>
               </div>
@@ -40,19 +40,19 @@
                 <div class="col-4">
                   <div class="form-group">
                       <label for="new_username">Username</label>
-                      <input type="text" maxlength="150" id="new_username" name="new_username" class="form-control border border-dark " required>
+                      <input type="text" maxlength="150" id="new_username" name="new_username" class="form-control" required>
                   </div>
                 </div>
                 <div class="col-4">
                   <div class="form-group">
                       <label for="new_password">Password</label>
-                      <input type="password" maxlength="150" id="new_password" name="new_password" class="form-control border border-dark " required>
+                      <input type="password" maxlength="150" id="new_password" name="new_password" class="form-control" required>
                   </div>
                 </div>
                 <div class="col-4">
                   <div class="form-group">
                       <label for="verify_password">Verify Password</label>
-                      <input type="password" maxlength="150" id="verify_password" name="verify_password" onchange="check_if_passwords_match();" class="form-control border border-dark " required>
+                      <input type="password" maxlength="150" id="verify_password" name="verify_password" onchange="check_if_passwords_match();" class="form-control" required>
                   </div>
                 </div>
                 <div id = "password_dont_match"></div>
@@ -67,13 +67,13 @@
                 <div class="col-6">
                   <div class="form-group">
                       <label for="employer_name">Name Of Employer</label>
-                      <input type="text" maxlength="150" id="employer_name" name="employer_name" class="form-control border border-dark " required>
+                      <input type="text" maxlength="150" id="employer_name" name="employer_name" class="form-control" required>
                   </div>
                 </div>
                 <div class="col-6">
                   <div class="form-group">
                       <label for="position">Position</label>
-                      <input type="text" maxlength="150" id="position" name="position" class="form-control border border-dark " required>
+                      <input type="text" maxlength="150" id="position" name="position" class="form-control" required>
                   </div>
                 </div>
               </div>
@@ -82,22 +82,22 @@
                   <div class="form-group">
                     <label for="salary">Salary</label>
                     <div class="input-group">
-                      <span class="input-group-text border border-dark ">$</span>
-                      <input type="text" id = "salary" name="salary" class="form-control border border-dark " aria-label="Amount (to the nearest dollar)" required>
-                      <span class="input-group-text border border-dark ">.00</span>
+                      <span class="input-group-text">$</span>
+                      <input type="text" id = "salary" name="salary" class="form-control" aria-label="Amount (to the nearest dollar)" required>
+                      <span class="input-group-text">.00</span>
                     </div>
                   </div>
                 </div>
                 <div class="col-4">
                   <div class="form-group">
                       <label for="income_date">Income Date</label>
-                      <input type="date" maxlength="150" id="income_date" name="income_date" class="form-control border border-dark " required>
+                      <input type="date" maxlength="150" id="income_date" name="income_date" class="form-control" required>
                   </div>
                 </div>
                 <div class="col-4">
                   <div class="form-group">
                       <label for="income_frequency">Income Frequency</label>
-                      <input type="number" maxlength="150" id="income_frequency" name="income_frequency" class="form-control border border-dark " required>
+                      <input type="number" maxlength="150" id="income_frequency" name="income_frequency" class="form-control" required>
                   </div>
                 </div>
               </div>

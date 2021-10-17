@@ -17,7 +17,6 @@ var csrftoken = getCookie('csrftoken');
 
 
 function check_if_email_exist(email){
-    console.log("email changed: ", email);
     $.ajax(
         {
             method: "GET",
@@ -31,16 +30,14 @@ function check_if_email_exist(email){
                 "email": email,
             },
             success: function (data, textStatus, jqXHR) {
-                console.log("response: ", data);
                 if(data['exists']){
-                    console.log("Alert User that Email already exists and clear the email input");
                     message = "This email already exists in our system, you can reset your password or enter another email.";
                     $('#alert_email_exists').html('<div class="text-center alert alert-warning alert-dismissible mt-3" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>')
                     $("#email").val("");
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                console.log("Error: ", textStatus);
+                console.error("Error: ", textStatus);
             }
         }
     );
@@ -48,8 +45,6 @@ function check_if_email_exist(email){
 }
 
 function check_if_passwords_match(){
-    console.log("Password: ", $("#new_password").val());
-    console.log("Verify Password: ", $("#verify_password").val());
     $.ajax(
         {
             method: "GET",
@@ -64,7 +59,6 @@ function check_if_passwords_match(){
                 "verify_password": $("#verify_password").val(),
             },
             success: function (data, textStatus, jqXHR) {
-                console.log("response: ", data);
                 if(!data['matched']){
                     message = "Password's did not match, please try again.";
                     $('#password_dont_match').html('<div class="text-center alert alert-danger alert-dismissible mt-3" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>')
@@ -73,7 +67,7 @@ function check_if_passwords_match(){
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                console.log("Error: ", textStatus);
+                console.error("Error: ", textStatus);
             }
         }
     );
@@ -100,7 +94,6 @@ function submit_new_account(){
         }
     }
     if($("#create_account_form").valid()){
-        console.log("Validated");
         $.ajax({
             method: "POST",
             url: "create_account/",
@@ -114,7 +107,6 @@ function submit_new_account(){
                 
             },
             success: function (data, textStatus, jqXHR) {
-                console.log("data: ", data);
                 $("#create_account_modal").modal('hide');
                 if(data['response'] == "success"){
                     $("#success_message").text(data['message'])
@@ -125,7 +117,7 @@ function submit_new_account(){
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                console.log(errorThrown);                $("#create_account_modal").modal('hide');
+                console.error(errorThrown);                $("#create_account_modal").modal('hide');
                 $("#create_account_modal").modal('hide');
                 $("#error_message").text(data['message'])
                 $("#error_modal").modal("show");
@@ -152,7 +144,11 @@ $(document).ready(function(){
                     .removeClass('is-invalid');
             },
             errorPlacement: function (error, element) {
-                error.insertAfter(element);
+                if(element[0].id == "salary"){
+                    error.appendTo(element.parent('.input-group'));
+                }else{
+                    error.insertAfter(element);
+                }
             }
         });
         $("#create_account_form").validate({

@@ -17,7 +17,7 @@
                                                         <div class="col-6">
                                                             <div class="form-group">
                                                                 <label for="type_of_account">Types of Accounts</label>
-                                                                <select class="form-select border border-dark"  onchange="update_company_selector(this.value)" id = "type_of_account" name="type_of_account" aria-label="Type of Accounts">
+                                                                <select class="form-select" onchange="update_company_selector(this.value)" id = "type_of_account" name="type_of_account" aria-label="Type of Accounts">
                                                                     <option selected value="">Required</option>
                                                                     <option value="credit">Credit</option>
                                                                     <option value="debit">Debit</option>
@@ -28,7 +28,7 @@
                                                         <div class="col-6">
                                                             <div class="form-group">
                                                                 <label for="company_name">Company's List</label>
-                                                                <select class="form-select border border-dark" id = "company_name" name="company_name" aria-label="Company Name" disabled>
+                                                                <select class="form-select" id = "company_name" name="company_name" aria-label="Company Name" disabled>
                                                                     <option selected value="">Required</option>
                                                                 </select>
                                                             </div>
@@ -44,13 +44,13 @@
                                                         <div class="col-6">
                                                             <div class="form-group">
                                                                 <label for="name_of_recipient">Name of Recipient</label>
-                                                                <input class="form-control border border-dark" id="name_of_recipient" name="name_of_recipient" type="text">
+                                                                <input class="form-control" id="name_of_recipient" name="name_of_recipient" type="text">
                                                             </div>
                                                         </div>
                                                         <div class="col-6">
                                                             <div class="form-group">
                                                                 <label for="date_occured">Transaction Date</label>
-                                                                <input class="form-control border border-dark" id="date_occured" name="date_occured" type="date">
+                                                                <input class="form-control" id="date_occured" name="date_occured" type="date">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -60,9 +60,9 @@
                                                             <div class="form-group">
                                                                 <label for="transaction_amount">Transaction Amount</label>
                                                                 <div class="input-group">
-                                                                    <span class="input-group-text border border-dark ">$</span>
-                                                                    <input type="text" id = "transaction_amount" name="transaction_amount" class="form-control border border-dark " aria-label="Amount (to the nearest dollar)" required>
-                                                                    <span class="input-group-text border border-dark ">.00</span>
+                                                                    <span class="input-group-text">$</span>
+                                                                    <input type="text" id = "transaction_amount" name="transaction_amount" class="form-control" aria-label="Amount (to the nearest dollar)" required>
+                                                                    <span class="input-group-text">.00</span>
                                                                 </div>
                                                             </div>
                                                         </div>
