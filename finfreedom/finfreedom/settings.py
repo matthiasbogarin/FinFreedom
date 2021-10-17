@@ -16,9 +16,8 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-print("BASE DIR: ", BASE_DIR)
 STAT = os.path.join(BASE_DIR, 'static')
-print("STAT: ", STAT)
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -42,9 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #APPS
-    'finfreedom_frontend',
-    'finfreedom_api',
-    # 'rest_framework'
+    'finfreedom_frontend.apps.FinfreedomFrontendConfig',
+    'finfreedom_api.apps.FinfreedomApiConfig',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [

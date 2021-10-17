@@ -15,6 +15,7 @@ from email.mime.text import MIMEText
 # Create your views here.
 def login(request):
     print("Reached the Login Page")
+    print("login request: ", request.method)
     if 'POST' == request.method:
         username = request.POST['username']
         password = request.POST['password']
@@ -43,12 +44,6 @@ def logout_view(request):
     auth_logout(request)
     response = HttpResponseRedirect('/')
     return response
-
-def create_account(request):
-    print("Create Account request: ", request)
-    if 'POST' == request.method:
-        print("request Object", request)
-    return HttpResponseRedirect("/")
 
 def overview(request):
     print("reaced the overiew function")

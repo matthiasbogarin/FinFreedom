@@ -5,6 +5,12 @@ django-excel-base==1.0.4
 django-excel-response2==3.0.2
 django-six==1.0.4
 pytz==2021.3
-screen==1.0.1
-sqlparse==0.4.2
-xlwt==1.3.0
+Babel==2.9.0
+django-cors-headers==2.4.0
+django-crispy==1.8.1
+django-widget-tweaks==1.4.5
+djangorestframework==3.11.0
+djangorestframework-datatables==0.5.2
+djangorestframework-jwt==1.11.0
+pylint==2.4.4
+

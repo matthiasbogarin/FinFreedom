@@ -12,7 +12,7 @@ urlpatterns = [
     path('accounts/', views.accounts, name='accounts'),
     path('profile/', views.profile, name='profile'),
     path('logout/', views.logout_view, name='logout'),
-    path('create_account/', views.create_account, name="create_acount"),
+    # path('create_account/', views.create_account, name="create_acount"),
 
     #reset password django paths
     path('reset_password/', auth_views.PasswordResetView.as_view(template_name="login/reset_password.html"), name="reset_password"),
