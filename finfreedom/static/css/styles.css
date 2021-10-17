@@ -1,0 +1,19 @@
+.contentlist{
+    width:215px;
+    float:center;
+    padding:0 0 0 5px;
+    position:relative;
+    float:left;
+    border-right: 1px #f8f7f3 solid;
+}
+
+.itemconfiguration
+{
+    height:440px;
+    width:215px;
+    /* background-color:#CCC; */		
+    overflow-y: auto;
+    float:left;
+    position:relative;
+    margin-left:-5px;
+}

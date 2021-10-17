@@ -1,0 +1,82 @@
+{% load static %}
+<div class="">
+    <form id="add_expense_form" method="POST">
+        <div class="" style="padding: 10px;">
+            <div class="text-center mt-4 mb-4">
+                <h4>
+                    Which Account was this Expense on?
+                </h4>
+            </div>
+            <div class="row mt-4 mb-4" style="width: 100%">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="type_of_account">Types of Accounts</label>
+                        <select class="form-select" onchange="update_campany_selector(this.value);" id = "type_of_account" name="type_of_account" aria-label="Type of Accounts">
+                            <option selected>Required</option>
+                            <option value="credit">Credit</option>
+                            <option value="debit">Debit</option>
+                            <option value="cash">Cash</option>
+                          </select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="company_name">Company's List</label>
+                        <select class="form-select" id = "company_name" name="company_name" aria-label="Company Name">
+                            <option selected>Required</option>
+                            <option value="citibank">Citibank</option>
+                            <option value="amex">Amex</option>
+                            <option value="chase">Chase</option>
+                            <option value="wells_fargo">Wells Fargo</option>
+                            <option value="capital_one">Capital One</option>
+                            <option value="apple">Apple</option>
+                            <option value="venmo">Venmo</option>
+                          </select>
+                    </div>
+                </div>
+            </div>
+            <hr class="w-75 border border-primary mt-4" style="margin-left: 12.5%;"/>
+            <div class="text-center mt-4 mb-4">
+                <h4>
+                    Transaction Info
+                </h4>
+            </div>
+            <div class="row mt-4 mb-4">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="name_of_recipient">Name of Recipient</label>
+                        <input class="form-control" id="name_of_recipient" name="name_of_recipient" type="text">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="date_occured">Transaction Date</label>
+                        <input class="form-control" id="date_occured" name="date_occured" type="date">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4 mb-4">
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="transaction_amount">Transaction Amount</label>
+                        <div class="input-group">
+                            <span class="input-group-text border border-dark ">$</span>
+                            <input type="text" id = "transaction_amount" name="transaction_amount" class="form-control border border-dark " aria-label="Amount (to the nearest dollar)" required>
+                            <span class="input-group-text border border-dark ">.00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3"></div>
+            </div>
+            <div class="row mt-5" style="display: flex; justify-content: space-around;">
+                <button type="button" class="btn btn-secondary ml-2 border border-dark " style="width: 100px;" data-bs-dismiss="modal">Close</button>
+                <a type="button" href="javascript:void(0);" onclick="" class="btn btn-primary border border-dark mr-2" style="width: 100px;">Submit</a>
+              </div>
+        </div>
+    </form>
+</div>
+
+{% block body_elements %}
+<script src="{% static 'js/manage.js' %}"></script>
+{% endblock %}

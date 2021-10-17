@@ -161,3 +161,9 @@ def createSuperUser(username, password, email = "", firstName = "", lastName = "
     user.save()
 
     return user
+
+def get_company_by_type(request):
+    print('Request: ', request.POST)
+    company_list = Transactions.objects.all(type_of_account=request.POST['type_of_acccount']).values_list()
+    print(company_list)
+    return JsonResponse({"data": "company"})

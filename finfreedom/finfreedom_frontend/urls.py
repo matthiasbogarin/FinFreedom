@@ -21,4 +21,5 @@ urlpatterns = [
 
     #POST Calls
     path('create_account/', views.create_account, name="create_acount"),
+    path('get_company_by_type_and_user/', views.get_company_by_type, name="get_company_by_type_and_user")
 ]
