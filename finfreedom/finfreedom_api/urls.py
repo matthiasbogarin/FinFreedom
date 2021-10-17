@@ -8,5 +8,5 @@ urlpatterns = [
     path('check_if_passwords_match/', views.check_if_passwords_match, name="check_if_passwords_match"),
 
     #Api Calls
-    path('create_account/', views.create_account, name="create_account"),
+    # path('create_account/', views.create_account, name="create_account"),
 ]

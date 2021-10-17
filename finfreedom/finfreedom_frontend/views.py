@@ -11,6 +11,34 @@ from datetime import datetime, timedelta
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from os import stat
+import re
+from django import http
+from django.contrib.auth.models import User
+from django.core.checks.messages import DEBUG
+from django.db.models import query
+from django.db.models.query import QuerySet, prefetch_related_objects
+from django.http import response
+from django.http.response import HttpResponse
+from django.shortcuts import render, get_object_or_404
+from django.views.decorators.csrf import requires_csrf_token
+from django.views import generic
+
+# from rest_framework.serializers import LIST_SERIALIZER_KWARGS
+from .models import *
+# from .serializers import *
+from django.http import Http404, JsonResponse
+# from rest_framework.views import APIView
+# from rest_framework.response import Response
+# from rest_framework import request, status, viewsets, generics, mixins
+from datetime import datetime, timedelta
+# from rest_framework.decorators import action, api_view
+# from .services import *
+from copy import deepcopy
+import time
+import json
+import pytz
+import pprint
 
 # Create your views here.
 def login(request):
@@ -77,3 +105,59 @@ def accounts(request):
 def profile(request):
     print("reaced the profile function")
     return render(request, 'pages/profile.html')
+
+def create_account(request):
+    data = json.loads(request.POST['data'])
+    profile_info = data['profile_info']
+    employer_info = data['employer_info']
+    try:
+        createSuperUser(
+            profile_info['username'], 
+            profile_info['password'],
+            profile_info['email'],
+            profile_info['first_name'],
+            profile_info['last_name']
+        )
+
+        profile_obj = Profiles.objects.filter(email=profile_info['email'])[0]
+        if(profile_obj is None):
+            return JsonResponse({"response": "Profile was not created!"})
+        employer_object = Employer(
+            profile_id=profile_obj, 
+            name_of_employer=employer_info['employer_name'], 
+            salary=employer_info['salary'],
+            position=employer_info['position'],
+            income_date=employer_info['income_date'],
+            income_frequency=int(employer_info['income_frequency']),
+        )
+        employer_object.save()
+        return JsonResponse({"response": "success", "message": profile_info['username'] + " account has successfully been created!"})
+    except Exception as e:
+        return JsonResponse({"response":  "Error", "message" : str(e)})
+
+def createSuperUser(username, password, email = "", firstName = "", lastName = ""):
+    invalidInputs = ["", None]
+
+    if username.strip() in invalidInputs or password.strip() in invalidInputs:
+        return None
+
+    profile_object = Profiles(
+        first_name=firstName,
+        last_name=lastName,
+        email=email,
+        username=username,
+        password=password,
+    )
+    profile_object.save()
+    user = User(
+        username = username,
+        email = email,
+        first_name = firstName,
+        last_name = lastName,
+    )
+    user.set_password(password)
+    user.is_superuser = False
+    user.is_staff = False
+    user.save()
+
+    return user

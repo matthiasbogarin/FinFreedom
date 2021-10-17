@@ -81,41 +81,54 @@ function check_if_passwords_match(){
 }
 
 function submit_new_account(){
-    console.log($('#income_date').val().trim());
+    var json_data = {
+        "profile_info":
+        {
+            "email": $('#email').val().trim(),
+            "first_name": $('#first_name').val().trim(),
+            "last_name": $('#last_name').val().trim(),
+            "username": $('#new_username').val().trim(),
+            "password": $("#new_password").val().trim(),
+        },
+        "employer_info": 
+        {
+            "employer_name": $('#employer_name').val().trim(),
+            "position": $('#position').val().trim(),
+            "salary": $('#salary').val().trim(),
+            "income_date": $('#income_date').val().trim(),
+            "income_frequency": $('#income_frequency').val().trim(),
+        }
+    }
     if($("#create_account_form").valid()){
         console.log("Validated");
         $.ajax({
-            method: "post",
-            url: "/finfreedom_api/create_account/",
+            method: "POST",
+            url: "create_account/",
             dataType: "json",
-            headers: {
-                'Content-type': 'application/json',
-                'X-CSRFToken': csrftoken,
-            },
-            data:{
-                "profile_info":{
-                    "email": $('#email').val().trim(),
-                    "first_name": $('#first_name').val().trim(),
-                    "last_name": $('#last_name').val().trim(),
-                    "username": $('#username').val().trim(),
-                    "password": $("#password").val().trim(),
-                },
-                "employer_info":{
-                    "employer_name": $('#employer_name').val().trim(),
-                    "position": $('#position').val().trim(),
-                    "salary": $('#salary').val().trim(),
-                    "income_date": "",
-                    "income_frequency": $('#employer_name').val().trim(),
-                }
+            
+            data: {
+                "csrfmiddlewaretoken": csrftoken,
+                "data": JSON.stringify(json_data),
             },
             beforeSend: function () {
                 
             },
             success: function (data, textStatus, jqXHR) {
-                
+                console.log("data: ", data);
+                $("#create_account_modal").modal('hide');
+                if(data['response'] == "success"){
+                    $("#success_message").text(data['message'])
+                    $("#sucess_modal").modal("show");
+                }else{
+                    $("#error_message").text(data['message'])
+                    $("#error_modal").modal("show");
+                }
             },
             error: function (jqXHR, textStatus, errorThrown) {
-               
+                console.log(errorThrown);                $("#create_account_modal").modal('hide');
+                $("#create_account_modal").modal('hide');
+                $("#error_message").text(data['message'])
+                $("#error_modal").modal("show");
             }
         });
     }
@@ -211,6 +224,5 @@ $(document).ready(function(){
             }
         });
     });
-
 });
 

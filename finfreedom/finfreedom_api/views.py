@@ -13,6 +13,7 @@ from django.http.response import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import requires_csrf_token
 from django.views import generic
+
 # from rest_framework.serializers import LIST_SERIALIZER_KWARGS
 from .models import *
 # from .serializers import *
@@ -51,7 +52,4 @@ def check_if_passwords_match(request):
     else:
         return JsonResponse({ "matched" : False})
 
-def create_account(request):
-    print("Request: ", request.POST)
-    return None
         
