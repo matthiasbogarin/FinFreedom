@@ -118,7 +118,7 @@ function submit_new_account(){
                 $("#create_account_modal").modal('hide');
                 if(data['response'] == "success"){
                     $("#success_message").text(data['message'])
-                    $("#sucess_modal").modal("show");
+                    $("#success_modal").modal("show");
                 }else{
                     $("#error_message").text(data['message'])
                     $("#error_modal").modal("show");
@@ -133,6 +133,8 @@ function submit_new_account(){
         });
     }
 }
+
+
 
 
 $(document).ready(function(){

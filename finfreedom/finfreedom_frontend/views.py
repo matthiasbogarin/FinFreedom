@@ -78,17 +78,23 @@ def overview(request):
     print("Profile ID: ", request.session['profile_id'])
     profile_object = Profiles.objects.filter(profile_id = request.session['profile_id']).values('profile_id', 'first_name', 'last_name')[0]
     print("Profile Object: ", profile_object)
-    context = {}
-
-    return render(request, 'pages/overview.html', 
-    {
+    context = {
         'profile_name': profile_object['first_name'] + " " + profile_object['last_name'] , 
         'profile_id' : profile_object['profile_id']
-    })
+    }
+
+    return render(request, 'pages/overview.html', context)
 
 def manage(request):
     print("reaced the manage function")
-    return render(request, 'pages/manage.html')
+    print("Profile ID: ", request.session['profile_id'])
+    profile_object = Profiles.objects.filter(profile_id = request.session['profile_id']).values('profile_id', 'first_name', 'last_name')[0]
+    print("Profile Object: ", profile_object)
+    context = {
+        'profile_name': profile_object['first_name'] + " " + profile_object['last_name'], 
+        'profile_id' : profile_object['profile_id'],
+    }
+    return render(request, 'pages/manage.html', context)
 
 def transactions(request):
     print("reaced the transactions function")
@@ -163,7 +169,34 @@ def createSuperUser(username, password, email = "", firstName = "", lastName = "
     return user
 
 def get_company_by_type(request):
-    print('Request: ', request.POST)
-    company_list = Transactions.objects.all(type_of_account=request.POST['type_of_acccount']).values_list()
-    print(company_list)
-    return JsonResponse({"data": "company"})
+    accounts_list_query = ProfileAccountMapping.objects.filter(profile_id=request.POST['profile_id'], account_id__type_of_account=request.POST['type_of_acc']).values_list('account_id')
+    accounts_list = []
+    if len(accounts_list_query) > 0:
+        for acc in accounts_list_query[0]:
+            accounts_list.append(acc)
+    accounts_companies = Accounts.objects.filter(account_id__in=accounts_list).values()
+    results = []
+    for acc_info in accounts_companies:
+        results.append({
+            "value": acc_info['account_id'],
+            "text": acc_info['company_name'].capitalize(),
+        })
+    return JsonResponse({"results": results})
+
+def create_transaction(request):
+    data = json.loads(request.POST['data'])
+    print(data)
+    try:
+        transaction_info = data['transaction_info']
+        account_object = Accounts.objects.filter(account_id=transaction_info['account_id'])
+        transaction_object = Transactions(
+            account_id=account_object[0], 
+            amount=transaction_info['amount'],
+            date_occured=transaction_info['date_occured'],
+            name_of_recipient=transaction_info['name_of_recipient'],
+        )
+        transaction_object.save()
+    except Exception as e:
+        print("System-Error: ", str(e))
+        return JsonResponse({"response": "error", "message": "Failed to Created Transaction!", "system_error": str(e)})
+    return JsonResponse({"response": "success", "message": "Successfully Created Transaction!"})
