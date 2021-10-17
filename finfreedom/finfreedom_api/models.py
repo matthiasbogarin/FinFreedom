@@ -1,8 +1,4 @@
 from django.db import models
-
-# Create your models here.
-
-from django.db import models
 from django.db.models.deletion import CASCADE
 
 # Create your models here.
@@ -10,7 +6,7 @@ class Profiles(models.Model):
     profile_id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    email = models.CharField(max_length=100)
+    email = models.CharField(max_length=100, unique=True)
     username = models.CharField(max_length=50)
     password = models.CharField(max_length=50)
 
@@ -59,3 +55,4 @@ class Subscriptions(models.Model):
     recurring_payment_date = models.CharField
     active = models.BooleanField()
     profile_id = models.ForeignKey(Profiles, on_delete=CASCADE)
+

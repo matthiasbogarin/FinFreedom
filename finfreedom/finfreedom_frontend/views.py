@@ -38,13 +38,17 @@ def login(request):
 
     return render(request, 'login/login.html')
 
-
-
 def logout_view(request):
     print(request)
     auth_logout(request)
     response = HttpResponseRedirect('/')
     return response
+
+def create_account(request):
+    print("Create Account request: ", request)
+    if 'POST' == request.method:
+        print("request Object", request)
+    return HttpResponseRedirect("/")
 
 def overview(request):
     print("reaced the overiew function")

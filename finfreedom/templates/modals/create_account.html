@@ -1,19 +1,43 @@
 
 <!-- Create Account Modal -->
 <div class="modal fade" id="create_account_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="staticBackdropLabel">Create FinFreedom Account</h5>
         </div>
         <div class="modal-body">
             <form id = "create_account_form" >
-
+              <div class="text-center">
+                <h4>
+                  User Profile Info
+                </h4>
+              </div>
+              <div class="row">
+                <div class="col-12 mb-3">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" maxlength="150" id="email" name="email" class="form-control" onchange="check_if_email_exist(this);">
+                    </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-group">
+                      <label for="first_name">First Name</label>
+                      <input type="text" maxlength="150" id="first_name" name="first_name" class="form-control">
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-group">
+                      <label for="last_name">Last Name</label>
+                      <input type="text" maxlength="150" id="last_name" name="last_name" class="form-control">
+                  </div>
+                </div>
+              </div>
             </form>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer" style="display: flex; justify-content: space-between;">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Submit</button>
+          <a type="button" href="create_account/" class="btn btn-primary">Submit</a>
         </div>
       </div>
     </div>
