@@ -16,9 +16,9 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
-
+print("BASE DIR: ", BASE_DIR)
+STAT = os.path.join(BASE_DIR, 'static')
+print("STAT: ", STAT)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -42,8 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #APPS
-    'finfreedom_frontend.apps.FinfreedomFrontendConfig',
-    'finfreedom_api.apps.FinfreedomApiConfig',
+    'finfreedom_frontend',
+    'finfreedom_api',
     # 'rest_framework'
 ]
 
@@ -124,10 +124,11 @@ USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
-STATIC_URL = "/static/"
-STATICFILES_DIR = [
-    os.path.join(BASE_DIR, "static")
+# STATIC_ROOT = 'static/'
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    STAT
 ]
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
