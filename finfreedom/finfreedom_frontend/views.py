@@ -80,6 +80,7 @@ def overview(request):
     profile_object = Profiles.objects.filter(profile_id = request.session['profile_id']).values('profile_id', 'first_name', 'last_name')[0]
     print("Profile Object: ", profile_object)
     context = {
+        "page": "Overview",
         'profile_name': profile_object['first_name'] + " " + profile_object['last_name'] , 
         'profile_id' : profile_object['profile_id']
     }
@@ -92,18 +93,11 @@ def manage(request):
     profile_object = Profiles.objects.filter(profile_id = request.session['profile_id']).values('profile_id', 'first_name', 'last_name')[0]
     print("Profile Object: ", profile_object)
     context = {
+        "page": "Manage",
         'profile_name': profile_object['first_name'] + " " + profile_object['last_name'], 
         'profile_id' : profile_object['profile_id'],
     }
     return render(request, 'pages/manage.html', context)
-
-def transactions(request):
-    profile_object = Profiles.objects.filter(profile_id = request.session['profile_id']).values('profile_id', 'first_name', 'last_name')[0]
-    context = {
-        'profile_name': profile_object['first_name'] + " " + profile_object['last_name'], 
-        'profile_id' : profile_object['profile_id'],
-    }
-    return render(request, 'pages/transactions.html', context)
 
 class accounts(TemplateView):
     template_name = 'pages/accounts.html'
@@ -161,6 +155,58 @@ class accounts(TemplateView):
         context = {
             "headers": headers['headers'],
             "rows": rows,
+            "page": "Account",
+            'profile_name': profile_object['first_name'] + " " + profile_object['last_name'] , 
+            'profile_id' : profile_object['profile_id']
+        }
+        print(context)
+
+        return render(request,self.template_name, context)
+
+class transactions(TemplateView):
+    template_name = 'pages/transactions.html'
+    
+    def get(self, request):
+        print("reaced the transactions function")
+        currentMonth = datetime.now().month
+        currentYear = datetime.now().year
+        profile_object = Profiles.objects.filter(profile_id = request.session['profile_id']).values('profile_id', 'first_name', 'last_name')[0]
+        
+        #headers
+        headers = {'headers':['Account Name', 'Recipient', 'Amount', "Date"]}
+        rows = []
+        #get_data using profile_id
+        accounts_from_profile = ProfileAccountMapping.objects.all()
+        print(accounts_from_profile)
+        data = []
+        if len(accounts_from_profile) > 0:
+            for acct in accounts_from_profile:
+                print(acct.profile_id.profile_id)
+                if acct.profile_id.profile_id == profile_object['profile_id']:
+                    data.append(acct.account_id.account_id)
+        print(data)
+        transactions_obj_list = Transactions.objects.filter(account_id__account_id__in=data).values()
+        print("transactions: ", transactions_obj_list)
+        account_obj_list = Accounts.objects.filter(account_id__in=data).values()
+        if len(transactions_obj_list) > 0:
+            for d in transactions_obj_list:
+                print(d)
+                print(d['account_id_id'])
+                account_obj = Accounts.objects.filter(account_id=d['account_id_id'])[0]
+                print(account_obj)
+                data = {
+                    'transaction_id': d['transaction_id'],
+                    'account_name': account_obj.account_name,
+                    'recipient': d['name_of_recipient'],
+                    'amount': d['amount'], 
+                    'date_occured': d['date_occured'],
+                }
+                rows.append(data)
+
+        context = {
+            "headers": headers['headers'],
+            "rows": rows,
+            "page": "Transaction",
             'profile_name': profile_object['first_name'] + " " + profile_object['last_name'] , 
             'profile_id' : profile_object['profile_id']
         }
@@ -174,7 +220,23 @@ def subscriptions(request):
 
 def profile(request):
     print("reaced the profile function")
-    return render(request, 'pages/profile.html')
+    profile_object = Profiles.objects.filter(profile_id=request.session['profile_id']).values('profile_id', 'first_name', 'last_name', 'username')[0]
+    employer_object = Employer.objects.filter(profile_id=profile_object['profile_id']).values('name_of_employer', 'position', 'salary')[0]
+    print("Profile Object: ", profile_object)
+    print("Employer Object: ", employer_object)
+
+    context = {
+        "page": "Profile",
+        'profile_name': profile_object['first_name'] + " " + profile_object['last_name'], 
+        'profile_id' : profile_object['profile_id'],
+        'first_name': profile_object['first_name'],
+        'last_name': profile_object['last_name'],
+        'username': profile_object['username'],
+        'name_of_employer': employer_object['name_of_employer'],
+        'position': employer_object['position'],
+        'salary': "$" + str(employer_object['salary']),
+    }
+    return render(request, 'pages/profile.html', context)
  
 def create_account(request):
     data = json.loads(request.POST['data'])

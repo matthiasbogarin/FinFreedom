@@ -10,22 +10,24 @@
         <div class="" style="padding: 10px;">
             <div class="text-center mt-4 mb-4">
                 <h4>
-                    Which Credit Card Account are you paying?                
+                    Which Account do you want to transfer from?                
                 </h4>
             </div>
             <div class="row mt-4 mb-4" style="width: 100%">
                 <div class="col-6">
                     <div class="form-group">
-                        <label for="savings_type_of_account">Types of Accounts</label>
-                        <select class="form-select" id = "savings_type_of_account" name="savings_type_of_account" aria-label="Type of Accounts">
-                            <option selected value="savings">Savings</option>
+                        <label for="credit_type_of_account">Types of Accounts</label>
+                        <select class="form-select" id = "credit_type_of_account" name="credit_type_of_account" aria-label="Type of Accounts">
+                            <option selected value="">Required</option>
+                            <option value="credit">Debit</option>
+                            <option value="cash">Cash</option>
                         </select>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label for="savings_company_name">Company's List</label>
-                        <select class="form-select" id = "savings_company_name" onchange="on_select_of_company();" name="savings_company_name" aria-label="Company Name" disabled>
+                        <label for="credit_company_name">Company's List</label>
+                        <select class="form-select" id = "credit_company_name" onchange="on_select_of_company();" name="credit_company_name" aria-label="Company Name" disabled>
                             <option selected value="">Required</option>
                         </select>
                     </div>

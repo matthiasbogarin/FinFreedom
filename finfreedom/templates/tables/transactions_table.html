@@ -1,0 +1,52 @@
+{% load static %}
+{% block body_elements %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
+<script src="{% static 'js/account.js' %}"></script>
+{% endblock %}
+<div class="">
+    <div class="row mb-3" style="display: flex;">
+        <div class="col-6 float-start" style="display: flex; justify-content: start; padding: 0;">
+            <!-- <button type="button" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="right" title="Add New Tr" onclick="$('#new_account_modal').modal('show');">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg>
+            </button> -->
+        </div>
+        <div class="col-6 float-end" style="display: flex; justify-content: end; padding: 0;">
+        </div>
+    </div>
+    <div class="row table-responsive">
+        <table id="transactions_table" class="table table-dark table-striped table-bordered align-middle">
+            <thead class="bg-white border border-dark">
+                <tr>
+                    <!-- <th>Action</th> -->
+                    {% for k in headers %}
+                    <th scope="col">{{k}}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody class="bg-info text-center border border-dark">
+                {% for item in rows %}
+                    <tr>
+                        <!-- <td>
+                            <button href="javascript:void(0);" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Delete Transaction" class="btn btn-danger" onclick="delete_transaction(this);"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                              </svg></button>
+                        </td> -->
+                        <td class="transaction_id_class" hidden>{{item.transaction_id}}</td>
+                        <td>{{item.account_name}}</td>
+                        <td>{{item.recipient}}</td>
+                        <td>{{item.amount}}</td>
+                        <td>{{item.date_occured}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% include 'modals/new_account.html' %}
+{% include 'modals/confirm_delete.html' %}
