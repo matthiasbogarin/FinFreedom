@@ -368,13 +368,23 @@ def create_expense_transaction(request):
     try:
         transaction_info = data['transaction_info']
         account_object = Accounts.objects.filter(account_id=transaction_info['account_id'])
+        print(account_object[0])
         transaction_object = Transactions(
             account_id=account_object[0], 
             amount=transaction_info['amount'],
             date_occured=transaction_info['date_occured'],
-            name_of_recipient=transaction_info['name_of_recipient'],
-        )
+            name_of_recipient=transaction_info['name_of_recipient']
+            )
         transaction_object.save()
+        account_obj = Accounts.objects.filter(account_id=transaction_info['account_id']).values()[0]
+        print(account_obj)
+        if account_obj['type_of_account'] == 'credit':
+            print('hit this')
+            new_amount = account_obj['amount_on_card'] - transaction_info['amount']
+        else:
+            new_amount = account_obj['amount_on_card'] + transaction_info['amount']
+        print(new_amount)
+        Accounts.objects.filter(account_id=transaction_info['account_id']).update(amount_on_card=new_amount)
     except Exception as e:
         print("System-Error: ", str(e))
         return JsonResponse({"response": "error", "message": "Failed to Created Transaction!", "system_error": str(e)})
@@ -396,6 +406,11 @@ def create_income_transaction(request):
             name_of_recipient=transaction_info['name_of_recipient'],
         )
         transaction_object.save()
+        account_obj = Accounts.objects.filter(account_id=transaction_info['account_id']).values()[0]
+        print(account_obj)
+        new_amount = account_obj['amount_on_card'] + transaction_info['amount']
+        print(new_amount)
+        Accounts.objects.filter(account_id=transaction_info['account_id']).update(amount_on_card=new_amount)
     except Exception as e:
         print("System-Error: ", str(e))
         return JsonResponse({"response": "error", "message": "Failed to Created Transaction!", "system_error": str(e)})
@@ -409,15 +424,34 @@ def pay_credit_transaction(request):
     data = json.loads(request.POST['data'])
     print(data)
     try:
+        credit_info = data['credit_info']
+        account_info = data['account_info']
         transaction_info = data['transaction_info']
-        account_object = Accounts.objects.filter(account_id=transaction_info['account_id'])
-        transaction_object = Transactions(
+        account_object = Accounts.objects.filter(account_id=account_info['account_id'])
+        credit_object = Accounts.objects.filter(account_id=credit_info['credit_account_id'])
+        credit_transaction_object = Transactions(
             account_id=account_object[0], 
             amount=transaction_info['amount'],
             date_occured=transaction_info['date_occured'],
             name_of_recipient=transaction_info['name_of_recipient'],
         )
-        transaction_object.save()
+        credit_transaction_object.save()
+        acc_transaction_object = Transactions(
+            account_id=credit_object[0], 
+            amount=transaction_info['amount'],
+            date_occured=transaction_info['date_occured'],
+            name_of_recipient=transaction_info['name_of_recipient'],
+        )
+        acc_transaction_object.save()
+        account_obj = Accounts.objects.filter(account_id=account_info['account_id']).values()[0]
+        credit_obj = Accounts.objects.filter(account_id=credit_info['credit_account_id']).values()[0]
+        print(account_obj)
+        new_amount_credit = credit_obj['amount_on_card'] + transaction_info['amount']
+        new_amount_account = account_obj['amount_on_card'] + transaction_info['amount']
+        print(new_amount_credit)
+        print(new_amount_account)
+        Accounts.objects.filter(account_id=account_info['account_id']).update(amount_on_card=new_amount_account)
+        Accounts.objects.filter(account_id=credit_info['credit_account_id']).update(amount_on_card=new_amount_credit)
     except Exception as e:
         print("System-Error: ", str(e))
         return JsonResponse({"response": "error", "message": "Failed to Created Transaction!", "system_error": str(e)})

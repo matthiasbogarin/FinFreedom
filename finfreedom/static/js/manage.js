@@ -15,7 +15,9 @@ function getCookie(name) {
 
 var csrftoken = getCookie('csrftoken');
 
-function update_company_selector(type_of_acc){
+function update_company_selector(type_of_acc, selector){
+    console.log("hit the update company selector func");
+    console.log(type_of_acc, " : ", selector);
     var profile_id = $("#profile_id").text();
     $.ajax(
         {
@@ -28,6 +30,7 @@ function update_company_selector(type_of_acc){
                 "profile_id": profile_id,
             },
             success: function (data, textStatus, jqXHR) {
+                console.log($("#tab_name").text() == "expense");
                 if($("#tab_name").text() == "expense"){
                     $("#company_name").prop('disabled', false);
                     $("#company_name").empty();
@@ -43,11 +46,21 @@ function update_company_selector(type_of_acc){
                         $("#income_company_name").append('<option value="' + data['results'][index]['value'] + '">' + data['results'][index]['text'] + '</option>')
                     }
                 }else if($("#tab_name").text() == "credit"){
-                    $("#credit_company_name").prop('disabled', false);
-                    $("#credit_company_name").empty();
-                    $("#credit_company_name").append('<option selected value="">Required</option>');
-                    for(var index in data['results'] ){
-                        $("#credit_company_name").append('<option value="' + data['results'][index]['value'] + '">' + data['results'][index]['text'] + '</option>')
+                    console.log(selector)
+                    if(selector == "account"){
+                        $("#account_company_name").prop('disabled', false);
+                        $("#account_company_name").empty();
+                        $("#account_company_name").append('<option selected value="">Required</option>');
+                        for(var index in data['results'] ){
+                            $("#account_company_name").append('<option value="' + data['results'][index]['value'] + '">' + data['results'][index]['text'] + '</option>')
+                        }
+                    }else{
+                        $("#credit_company_name").prop('disabled', false);
+                        $("#credit_company_name").empty();
+                        $("#credit_company_name").append('<option selected value="">Required</option>');
+                        for(var index in data['results'] ){
+                            $("#credit_company_name").append('<option value="' + data['results'][index]['value'] + '">' + data['results'][index]['text'] + '</option>')
+                        }
                     }
                 }else if($("#tab_name").text() == "savings"){
                     $("#savings_company_name").prop('disabled', false);
@@ -153,9 +166,16 @@ function create_income_transaction(){
 
 function pay_credit_transaction(){
     var json_data = {
+        "credit_info":
+        {
+            "credit_account_id": $("#credit_company_name").val(),
+        },
+        "account_info":
+        {
+            "account_id": $("#account_company_name").val(),
+        },
         "transaction_info":
         {
-            "account_id": $('#credit_company_name').val().trim(),
             "amount": Number("-" + $('#credit_transaction_amount').val().trim()),
             "date_occured": $('#credit_date_occured').val().trim(),
             "name_of_recipient": $('#credit_name_of_recipient').val().trim(),
@@ -364,6 +384,18 @@ $(document).ready(function(){
                     },
                 },
                 credit_company_name: {
+                    required: true,
+                    normalizer: function (value){
+                        return $.trim(value);
+                    },
+                },
+                account_type_of_account: {
+                    required: true,
+                    normalizer: function (value){
+                        return $.trim(value);
+                    },
+                },
+                account_company_name: {
                     required: true,
                     normalizer: function (value){
                         return $.trim(value);

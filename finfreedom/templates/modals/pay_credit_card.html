@@ -8,12 +8,12 @@
 <div class="">
     <form id="pay_credit_form" method="POST">
         <div class="" style="padding: 10px;">
-            <div class="text-center mt-4 mb-4">
+            <div class="text-center mt-2 mb-2">
                 <h4>
                     Which Credit Card Account are you paying?                
                 </h4>
             </div>
-            <div class="row mt-4 mb-4" style="width: 100%">
+            <div class="row mt-2 mb-2" style="width: 100%">
                 <div class="col-6">
                     <div class="form-group">
                         <label for="credit_type_of_account">Types of Accounts</label>
@@ -32,39 +32,39 @@
                     </div>
                 </div>
             </div>
-            <hr class="w-75 border border-primary mt-4" style="margin-left: 12.5%;"/>
+            <hr class="w-75 border border-primary mt-2" style="margin-left: 12.5%;"/>
             <div class="text-center mt-4 mb-4">
                 <h4>
                     Which Account do you want to pay with?                
                 </h4>
             </div>
-            <div class="row mt-4 mb-4" style="width: 100%">
+            <div class="row mt-2 mb-2" style="width: 100%">
                 <div class="col-6">
                     <div class="form-group">
-                        <label for="credit_type_of_account">Types of Accounts</label>
-                        <select class="form-select" id = "credit_type_of_account" name="credit_type_of_account" aria-label="Type of Accounts">
+                        <label for="account_type_of_account">Types of Accounts</label>
+                        <select class="form-select" id = "account_type_of_account" name="account_type_of_account" onchange="update_company_selector(this.value, 'account');" aria-label="Type of Accounts">
                             <option selected value="">Required</option>
-                            <option value="credit">Debit</option>
+                            <option value="debit">Debit</option>
                             <option value="cash">Cash</option>
                         </select>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label for="credit_company_name">Company's List</label>
-                        <select class="form-select" id = "credit_company_name" onchange="on_select_of_company();" name="credit_company_name" aria-label="Company Name" disabled>
+                        <label for="account_company_name">Company's List</label>
+                        <select class="form-select" id = "account_company_name" onchange="on_select_of_company();" name="account_company_name" aria-label="Company Name" disabled>
                             <option selected value="">Required</option>
                         </select>
                     </div>
                 </div>
             </div>
-            <hr class="w-75 border border-primary mt-4" style="margin-left: 12.5%;"/>
+            <hr class="w-75 border border-primary mt-2" style="margin-left: 12.5%;"/>
             <div class="text-center mt-4 mb-4">
                 <h4>
                     Transaction Info
                 </h4>
             </div>
-            <div class="row mt-4 mb-4">
+            <div class="row mt-2 mb-2">
                 <div class="col-6">
                     <div class="form-group">
                         <label for="credit_name_of_recipient">Name of Recipient</label>
@@ -78,7 +78,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row mt-4 mb-4">
+            <div class="row mt-2 mb-2">
                 <div class="col-3"></div>
                 <div class="col-6">
                     <div class="form-group">
@@ -92,7 +92,7 @@
                 </div>
                 <div class="col-3"></div>
             </div>
-            <div class="row mt-5" style="display: flex; justify-content: space-around;">
+            <div class="row mt-3" style="display: flex; justify-content: space-around;">
                 <button type="button" class="btn btn-secondary ml-2 border border-dark " style="width: 100px;" onclick="clear_credit_transaction_form();">Clear</button>
                 <a type="button" href="javascript:void(0);" onclick="pay_credit_transaction();" class="btn btn-primary border border-dark mr-2" style="width: 100px;">Submit</a>
             </div>

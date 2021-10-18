@@ -5,7 +5,7 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
 <script src="{% static 'js/account.js' %}"></script>
 {% endblock %}
-<div class="">
+<div class=""style="overflow-y:auto; max-height: 85%;">
     <div class="row mb-3" style="display: flex;">
         <div class="col-6 float-start" style="display: flex; justify-content: start; padding: 0;">
             <!-- <button type="button" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="right" title="Add New Tr" onclick="$('#new_account_modal').modal('show');">
@@ -28,7 +28,7 @@
                     {% endfor %}
                 </tr>
             </thead>
-            <tbody class="bg-info text-center border border-dark">
+            <tbody class="bg-info text-center border border-dark" >
                 {% for item in rows %}
                     <tr>
                         <!-- <td>
