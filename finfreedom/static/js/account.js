@@ -48,6 +48,7 @@ function delete_account(e){
                     clear_account_form(); 
                     $("#success_message").text(data['message'])
                     $("#success_modal").modal("show");
+                    location.reload(true);
                 }else{
                     $("#error_message").text(data['message'])
                     $("#error_modal").modal("show");
@@ -94,6 +95,7 @@ function submit_new_account(){
                         clear_account_form(); 
                         $("#success_message").text(data['message'])
                         $("#success_modal").modal("show");
+                        location.reload(true);
                     }else{
                         $("#error_message").text(data['message'])
                         $("#error_modal").modal("show");
@@ -124,6 +126,10 @@ function clear_account_form(){
 
 
 $(document).ready(function(){
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
     $(function () {
         $.validator.setDefaults({
             errorClass: 'invalid-feedback',
