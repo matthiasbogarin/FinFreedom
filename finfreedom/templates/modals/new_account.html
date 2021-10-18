@@ -7,103 +7,101 @@
           <h5 class="modal-title" id="staticBackdropLabel">Create New Account</h5>
         </div>
         <div class="modal-body border border-primary">
-            <form id = "create_account_form" method="POST">
-              <div class="text-center mt-2 mb-2">
-                <h4>
-                  Profile Info
-                </h4>
-              </div>
+            <form id = "new_account_form" method="POST">
               <div class="row mb-2">
-                <div class="col-12">
+                <div class="col-6">
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" maxlength="150" id="email" name="email" class="form-control" onchange="check_if_email_exist(this.value);" required>
-                        <div id = "alert_email_exists"></div>
+                        <label for="type_of_account">Types of Accounts</label>
+                        <select class="form-select" id = "type_of_account" name="type_of_account" aria-label="Type of Accounts">
+                            <option selected value="">Required</option>
+                            <option value="credit">Credit</option>
+                            <option value="debit">Debit</option>
+                            <option value="cash">Cash</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="company_name">Company Of Account</label>
+                        <input type="text" maxlength="150" id="company_name" name="company_name" class="form-control" required>
                       </div>
                 </div>
               </div>
               <div class="row mb-2">
+                <div class="col-3"></div>
                 <div class="col-6">
-                  <div class="form-group">
-                      <label for="first_name">First Name</label>
-                      <input type="text" maxlength="150" id="first_name" name="first_name" class="form-control" required>
-                  </div>
+                <div class="form-group">
+                    <label for="account_name">Account Name</label>
+                    <input type="text" maxlength="150" id="account_name" name="account_name" class="form-control" required>
                 </div>
-                <div class="col-6">
-                  <div class="form-group">
-                      <label for="last_name">Last Name</label>
-                      <input type="text" maxlength="150" id="last_name" name="last_name" class="form-control" required>
-                  </div>
                 </div>
-              </div>
-              <div class="row mb-2">
-                <div class="col-4">
-                  <div class="form-group">
-                      <label for="new_username">Username</label>
-                      <input type="text" maxlength="150" id="new_username" name="new_username" class="form-control" required>
-                  </div>
-                </div>
-                <div class="col-4">
-                  <div class="form-group">
-                      <label for="new_password">Password</label>
-                      <input type="password" maxlength="150" id="new_password" name="new_password" class="form-control" required>
-                  </div>
-                </div>
-                <div class="col-4">
-                  <div class="form-group">
-                      <label for="verify_password">Verify Password</label>
-                      <input type="password" maxlength="150" id="verify_password" name="verify_password" onchange="check_if_passwords_match();" class="form-control" required>
-                  </div>
-                </div>
-                <div id = "password_dont_match"></div>
+                <div class="col-3"></div>
               </div>
               <hr class="w-75 border border-primary " style="margin-left: 12.5%;"/>
               <div class="text-center mt-4 mb-4">
                 <h4>
-                  Employer Info
+                  Card Info
                 </h4>
               </div>
               <div class="row mb-2">
                 <div class="col-6">
                   <div class="form-group">
-                      <label for="employer_name">Name Of Employer</label>
-                      <input type="text" maxlength="150" id="employer_name" name="employer_name" class="form-control" required>
+                      <label for="card_on_name">Name on Card</label>
+                      <input type="text" maxlength="150" id="card_on_name" name="card_on_name" class="form-control" required>
                   </div>
                 </div>
                 <div class="col-6">
                   <div class="form-group">
-                      <label for="position">Position</label>
-                      <input type="text" maxlength="150" id="position" name="position" class="form-control" required>
+                      <label for="card_number">Card Number</label>
+                      <input type="text" maxlength="150" id="card_number" name="card_number" class="form-control" required>
                   </div>
                 </div>
               </div>
               <div class="row mb-4">
                 <div class="col-4">
+                    <div class="form-group">
+                        <label for="expiration_date">Expiration Date</label>
+                        <input type="date" maxlength="150" id="expiration_date" name="expiration_date" class="form-control" required>
+                    </div>
+                  </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="security_code">Security Code</label>
+                        <input type="number" maxlength="150" id="security_code" name="security_code" class="form-control" required>
+                    </div>
+                </div>
+                <div class="col-4">
                   <div class="form-group">
-                    <label for="salary">Salary</label>
+                      <label for="payment_day">Payment day</label>
+                      <input type="number" maxlength="150" id="payment_day" name="payment_day" class="form-control" >
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-4">
+                <div class="col-6">
+                  <div class="form-group">
+                    <label for="amount_on_card">Amount On Card (cash or debit account)</label>
                     <div class="input-group">
                       <span class="input-group-text">$</span>
-                      <input type="text" id = "salary" name="salary" class="form-control" aria-label="Amount (to the nearest dollar)" required>
+                      <input type="text" id = "amount_on_card" name="amount_on_card" class="form-control" aria-label="Amount (to the nearest dollar)" required>
                       <span class="input-group-text">.00</span>
                     </div>
                   </div>
                 </div>
-                <div class="col-4">
+                <div class="col-6">
                   <div class="form-group">
-                      <label for="income_date">Income Date</label>
-                      <input type="date" maxlength="150" id="income_date" name="income_date" class="form-control" required>
-                  </div>
-                </div>
-                <div class="col-4">
-                  <div class="form-group">
-                      <label for="income_frequency">Income Frequency</label>
-                      <input type="number" maxlength="150" id="income_frequency" name="income_frequency" class="form-control" required>
+                    <label for="credit_on_card">Credit On Card (credit card)</label>
+                    <div class="input-group">
+                      <span class="input-group-text">$</span>
+                      <input type="text" id = "credit_on_card" name="credit_on_card" class="form-control" aria-label="Amount (to the nearest dollar)" required>
+                      <span class="input-group-text">.00</span>
+                    </div>
                   </div>
                 </div>
               </div>
               <hr class="w-100 border border-primary "/>
               <div class="row" style="display: flex; justify-content: space-around;">
-                <button type="button" class="btn btn-secondary ml-2 border border-dark " style="width: 100px;" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary ml-2 border border-dark" onclick="clear_account_form();"  style="width: 100px;" data-bs-dismiss="modal">Close</button>
                 <a type="button" href="javascript:void(0);" onclick="submit_new_account();" class="btn btn-primary border border-dark mr-2" style="width: 100px;">Submit</a>
               </div>
             </form>

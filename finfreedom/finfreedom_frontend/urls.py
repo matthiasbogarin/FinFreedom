@@ -27,4 +27,6 @@ urlpatterns = [
     path('create_income_transaction/', views.create_income_transaction, name="create_income_transaction"),
     path('pay_credit_transaction/', views.pay_credit_transaction, name="pay_credit_transaction"),
     path('transfer_to_savings/', views.transfer_to_savings, name="transfer_to_savings"),
+    path('submit_new_account/', views.submit_new_account, name="submit_new_account"),
+    path('delete_account/', views.delete_account, name="delete_account"),
 ]

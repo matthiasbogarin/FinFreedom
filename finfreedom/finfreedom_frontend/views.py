@@ -31,7 +31,7 @@ from django.http import Http404, JsonResponse
 # from rest_framework.views import APIView
 # from rest_framework.response import Response
 # from rest_framework import request, status, viewsets, generics, mixins
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta,date
 # from rest_framework.decorators import action, api_view
 # from .services import *
 from copy import deepcopy
@@ -52,7 +52,7 @@ def login(request):
         if user is not None:
             if user.is_active:
                 request.session["profile_id"] = Profiles.objects.filter(email=user.email).values('profile_id').first()["profile_id"]
-                response = HttpResponseRedirect('overview')
+                response = HttpResponseRedirect('accounts')
                 auth_login(request, user)
                 if 'remember' in request.POST and 'on' == request.POST['remember']:
                     response.set_cookie('FinFreedom_user', request.POST['username'], max_age=None)
@@ -98,8 +98,12 @@ def manage(request):
     return render(request, 'pages/manage.html', context)
 
 def transactions(request):
-    print("reaced the transactions function")
-    return render(request, 'pages/transactions.html')
+    profile_object = Profiles.objects.filter(profile_id = request.session['profile_id']).values('profile_id', 'first_name', 'last_name')[0]
+    context = {
+        'profile_name': profile_object['first_name'] + " " + profile_object['last_name'], 
+        'profile_id' : profile_object['profile_id'],
+    }
+    return render(request, 'pages/transactions.html', context)
 
 class accounts(TemplateView):
     template_name = 'pages/accounts.html'
@@ -114,32 +118,51 @@ class accounts(TemplateView):
         headers = {'headers':['Type Of Account', 'Company', 'Account Name', "Expiration Date", "Amount on Card", "Credit On Card", "Payment Date"]}
         rows = []
         #get_data using profile_id
-        accounts_from_profile = ProfileAccountMapping.objects.filter(account_id=profile_object['profile_id']).values_list("account_id").values_list('account_id')[0]
+        accounts_from_profile = ProfileAccountMapping.objects.all()
         print(accounts_from_profile)
         data = []
         if len(accounts_from_profile) > 0:
             for acct in accounts_from_profile:
-                print(acct)
-                data.append(acct)
+                print(acct.profile_id.profile_id)
+                if acct.profile_id.profile_id == profile_object['profile_id']:
+                    data.append(acct.account_id.account_id)
+        print(data)
         account_obj_list = Accounts.objects.filter(account_id__in=data).values()
         if len(account_obj_list) > 0:
             for d in account_obj_list:
                 print(d)
+                if d['amount_on_card'] == None:
+                    amount_on_card = None
+                else:
+                    amount_on_card = "$" + str(d['amount_on_card'])
+
+                if d['credit_on_card'] == None:
+                    credit_on_card = None
+                else:
+                    credit_on_card = "$" + str(d['credit_on_card'])
+
+                if d['payment_date'] == None:
+                    payment_date = None
+                else:
+                    payment_date = str(currentMonth) + "-" + d['payment_date'] + "-" + str(currentYear)
+    
                 data = {
                     'account_id': d['account_id'],
-                    'type_of_account': d['type_of_account'].capitalize(),
-                    'company': d['company_name'].capitalize(), 
+                    'type_of_account': d['type_of_account'],
+                    'company': d['company_name'], 
                     'account_name': d['account_name'],
                     'expiration_date': d['expiration_date'],
-                    'amount_on_card' : "$" + str(d['amount_on_card']),
-                    'credit_on_card':"$" + str(d['credit_on_card']),
-                    'payment_date': str(currentMonth) + "-" + d['payment_date'] + "-" + str(currentYear),
+                    'amount_on_card' : amount_on_card,
+                    'credit_on_card': credit_on_card,
+                    'payment_date': payment_date,
                 }
                 rows.append(data)
 
         context = {
             "headers": headers['headers'],
-            "rows": rows
+            "rows": rows,
+            'profile_name': profile_object['first_name'] + " " + profile_object['last_name'] , 
+            'profile_id' : profile_object['profile_id']
         }
         print(context)
 
@@ -149,15 +172,10 @@ def subscriptions(request):
     print("reaced the subscriptions function")
     return render(request, 'pages/subscriptions.html')
 
-
-
 def profile(request):
     print("reaced the profile function")
     return render(request, 'pages/profile.html')
-
-
-
-    
+ 
 def create_account(request):
     data = json.loads(request.POST['data'])
     profile_info = data['profile_info']
@@ -229,6 +247,55 @@ def get_company_by_type(request):
         })
     return JsonResponse({"results": results})
 
+def submit_new_account(request):
+    data = json.loads(request.POST['data'])
+    print(data)
+    account_info = data['account_info']
+    profile_id = account_info['profile_id']
+    try:
+        profile_obj = Profiles.objects.filter(profile_id=profile_id)[0]
+        if account_info['credit_on_card'] == '':
+            account_info['credit_on_card'] = None
+        if account_info['amount_on_card'] == '':
+            account_info['amount_on_card'] = None
+        new_acc_obj = Accounts(
+            type_of_account=account_info['type_of_account'],
+            company_name= account_info['company_name'],
+            account_name= account_info['account_name'],
+            name_on_card=account_info['card_on_name'],
+            card_number=account_info['card_number'],
+            expiration_date= account_info['expiration_date'],
+            security_code= account_info['security_code'],
+            payment_date= account_info['payment_day'],
+            amount_on_card=account_info['amount_on_card'],
+            credit_on_card=account_info['credit_on_card'],
+        )
+        print(new_acc_obj)
+        new_acc_obj.save()
+        
+        account_obj = Accounts.objects.filter(account_id=new_acc_obj.account_id)[0]
+        profileAccountMapObj = ProfileAccountMapping(
+            account_id=account_obj,
+            profile_id=profile_obj,
+            date_connect=date.today()
+        )
+        profileAccountMapObj.save()
+        return JsonResponse({"response":  "success", "message" : "Successfully Created Account!"})
+    except Exception as e:
+        print(str(e))
+        return JsonResponse({"response":  "Error", "message" : str(e)})
+
+def delete_account(request):
+    data = json.loads(request.POST['data'])
+    try:
+        profile_obj = Profiles.objects.filter(profile_id=data['profile_id'])[0]
+        account_obj = Accounts.objects.filter(account_id=data['account_id'])[0]
+        ProfileAccountMapping.objects.filter(account_id=account_obj, profile_id=profile_obj)[0].delete()
+        account_obj.delete()
+        return JsonResponse({"response": "success", "message": "Successfully Deleted Account!"})
+    except Exception as e:
+        print(str(e))
+        return JsonResponse({"response": "error", "message": "Failed to delete account!", "system_error": str(e)}) 
 
 # Add a Expense Transaction Function
 # This will make a negative Transaction 
