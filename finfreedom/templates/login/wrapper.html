@@ -19,24 +19,29 @@
         <div style="height: 100vh; width: 100vw; padding: 0; margin: 0;">
             <div class="row m-auto h-100">
                 <div class="col-md-12" style="margin: 0;">
-                    <div class="row bg-primary border border-dark" style="display: flex; height: 100vh; width: 100vw; justify-content: center; align-items: center;">
-                        <div class="col-3"></div>
-                        <div class="col-6 h-50 w-50">
-                            <h1 class="text-center" >FinFreedom</h1>
-                            <div class="card-body mt-3 border border-dark rounded bg-secondary w-100 h-100" style="display: flex; justify-content: center; align-items: center;">
-                                {% block widgets %}
-                                {% endblock %}
-                            </div>
-                            <div class="row w-100" style="margin-left: .10rem;">
-                                <div class="col-6">
-                                    <a href="/reset_password" id="reset_password_link" class="text-dark float-start"><small>Forgot your password?</small></a>                                        
-                                </div>
-                                <div class="col-6">
-                                    <a href="javascript:void(0);" id="create_account_link" onclick="$('#create_account_modal').modal('show');" class="text-dark float-end"><small>Create FinFreedom Profile</small></a>                                        
-                                </div>
-                            </div>
+                    <div class="row bg-primary border border-dark" style="display: flex; height: 100vh; width: 100vw; justify-content: center; align-items: center; padding: 0;">
+                        <div class="row" style="display: flex; justify-content: center; height: 50%; padding: 0;">
+                            <img style="width: 50%; height: 100%; margin: 0; padding:0;" src="{% static 'assets/images/finfreedom_logo.png' %}">
                         </div>
-                        <div class="col-3"></div>
+                        <div class="row" style="margin: 0; padding: 0; height: 50%;">
+                            <div class="col-3"></div>
+                            <div class="col-6 h-50 w-50">
+                                <!-- <h1 class="text-center" >FinFreedom</h1> -->
+                                <div class="card-body mt-3 border border-dark rounded bg-secondary w-100 h-100" style="display: flex; justify-content: center; align-items: center;">
+                                    {% block widgets %}
+                                    {% endblock %}
+                                </div>
+                                <div class="row w-100" style="margin-left: .10rem;">
+                                    <div class="col-6">
+                                        <a href="/reset_password" id="reset_password_link" class="text-dark float-start"><small>Forgot your password?</small></a>                                        
+                                    </div>
+                                    <div class="col-6">
+                                        <a href="javascript:void(0);" id="create_account_link" onclick="$('#create_account_modal').modal('show');" class="text-dark float-end"><small>Create FinFreedom Profile</small></a>                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3"></div>
+                        </div>
                     </div>
                 </div>
             </div>
