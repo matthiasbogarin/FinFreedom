@@ -39,6 +39,7 @@ import time
 import json
 import pytz
 import pprint
+from django.views.generic.base import TemplateView
 
 # Create your views here.
 def login(request):
@@ -100,18 +101,63 @@ def transactions(request):
     print("reaced the transactions function")
     return render(request, 'pages/transactions.html')
 
+class accounts(TemplateView):
+    template_name = 'pages/accounts.html'
+    
+    def get(self, request):
+        print("reaced the accounts function")
+        currentMonth = datetime.now().month
+        currentYear = datetime.now().year
+        profile_object = Profiles.objects.filter(profile_id = request.session['profile_id']).values('profile_id', 'first_name', 'last_name')[0]
+        
+        #headers
+        headers = {'headers':['Type Of Account', 'Company', 'Account Name', "Expiration Date", "Amount on Card", "Credit On Card", "Payment Date"]}
+        rows = []
+        #get_data using profile_id
+        accounts_from_profile = ProfileAccountMapping.objects.filter(account_id=profile_object['profile_id']).values_list("account_id").values_list('account_id')[0]
+        print(accounts_from_profile)
+        data = []
+        if len(accounts_from_profile) > 0:
+            for acct in accounts_from_profile:
+                print(acct)
+                data.append(acct)
+        account_obj_list = Accounts.objects.filter(account_id__in=data).values()
+        if len(account_obj_list) > 0:
+            for d in account_obj_list:
+                print(d)
+                data = {
+                    'account_id': d['account_id'],
+                    'type_of_account': d['type_of_account'].capitalize(),
+                    'company': d['company_name'].capitalize(), 
+                    'account_name': d['account_name'],
+                    'expiration_date': d['expiration_date'],
+                    'amount_on_card' : "$" + str(d['amount_on_card']),
+                    'credit_on_card':"$" + str(d['credit_on_card']),
+                    'payment_date': str(currentMonth) + "-" + d['payment_date'] + "-" + str(currentYear),
+                }
+                rows.append(data)
+
+        context = {
+            "headers": headers['headers'],
+            "rows": rows
+        }
+        print(context)
+
+        return render(request,self.template_name, context)
+
 def subscriptions(request):
     print("reaced the subscriptions function")
     return render(request, 'pages/subscriptions.html')
 
-def accounts(request):
-    print("reaced the accounts function")
-    return render(request, 'pages/accounts.html')
+
 
 def profile(request):
     print("reaced the profile function")
     return render(request, 'pages/profile.html')
 
+
+
+    
 def create_account(request):
     data = json.loads(request.POST['data'])
     profile_info = data['profile_info']
@@ -183,7 +229,11 @@ def get_company_by_type(request):
         })
     return JsonResponse({"results": results})
 
-def create_transaction(request):
+
+# Add a Expense Transaction Function
+# This will make a negative Transaction 
+# and will be minus from the debit or cash account for the logged in user.
+def create_expense_transaction(request):
     data = json.loads(request.POST['data'])
     print(data)
     try:
@@ -200,3 +250,68 @@ def create_transaction(request):
         print("System-Error: ", str(e))
         return JsonResponse({"response": "error", "message": "Failed to Created Transaction!", "system_error": str(e)})
     return JsonResponse({"response": "success", "message": "Successfully Created Transaction!"})
+
+
+# Add an Income transaction function
+# This should create a postive transaction that then is added on to the debit or cash account for the logged in user.
+def create_income_transaction(request):
+    data = json.loads(request.POST['data'])
+    print(data)
+    try:
+        transaction_info = data['transaction_info']
+        account_object = Accounts.objects.filter(account_id=transaction_info['account_id'])
+        transaction_object = Transactions(
+            account_id=account_object[0], 
+            amount=transaction_info['amount'],
+            date_occured=transaction_info['date_occured'],
+            name_of_recipient=transaction_info['name_of_recipient'],
+        )
+        transaction_object.save()
+    except Exception as e:
+        print("System-Error: ", str(e))
+        return JsonResponse({"response": "error", "message": "Failed to Created Transaction!", "system_error": str(e)})
+    return JsonResponse({"response": "success", "message": "Successfully Created Transaction!"})
+
+
+# Pay Credit Card function
+# This should choose a credit card account to make a transaction for a payment 
+# and minus that quantity from the credit card balance of the logged in user.
+def pay_credit_transaction(request):
+    data = json.loads(request.POST['data'])
+    print(data)
+    try:
+        transaction_info = data['transaction_info']
+        account_object = Accounts.objects.filter(account_id=transaction_info['account_id'])
+        transaction_object = Transactions(
+            account_id=account_object[0], 
+            amount=transaction_info['amount'],
+            date_occured=transaction_info['date_occured'],
+            name_of_recipient=transaction_info['name_of_recipient'],
+        )
+        transaction_object.save()
+    except Exception as e:
+        print("System-Error: ", str(e))
+        return JsonResponse({"response": "error", "message": "Failed to Created Transaction!", "system_error": str(e)})
+    return JsonResponse({"response": "success", "message": "Successfully Created Transaction!"})
+
+
+# Transfer to saving function
+# This should pick a An Account to move the money from to the logged in users savings account.
+def transfer_to_savings(request):
+    data = json.loads(request.POST['data'])
+    print(data)
+    try:
+        transaction_info = data['transaction_info']
+        account_object = Accounts.objects.filter(account_id=transaction_info['account_id'])
+        transaction_object = Transactions(
+            account_id=account_object[0], 
+            amount=transaction_info['amount'],
+            date_occured=transaction_info['date_occured'],
+            name_of_recipient=transaction_info['name_of_recipient'],
+        )
+        transaction_object.save()
+    except Exception as e:
+        print("System-Error: ", str(e))
+        return JsonResponse({"response": "error", "message": "Failed to Created Transaction!", "system_error": str(e)})
+    return JsonResponse({"response": "success", "message": "Successfully Created Transaction!"})
+    

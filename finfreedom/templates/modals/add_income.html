@@ -1,0 +1,76 @@
+{% load static %}
+{% block body_elements %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
+<script src="{% static 'js/manage.js' %}"></script>
+{% endblock %}
+<div class="">
+    <form id="add_income_form" method="POST">
+        <div class="" style="padding: 10px;">
+            <div class="text-center mt-4 mb-4">
+                <h4>
+                    Which Account was the Income on?
+                </h4>
+            </div>
+            <div class="row mt-4 mb-4" style="width: 100%">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="income_type_of_account">Types of Accounts</label>
+                        <select class="form-select" onchange="update_company_selector(this.value)" id = "income_type_of_account" name="income_type_of_account" aria-label="Type of Accounts">
+                            <option selected value="">Required</option>
+                            <option value="debit">Debit</option>
+                            <option value="cash">Cash</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="income_company_name">Company's List</label>
+                        <select class="form-select" id = "income_company_name" name="income_company_name" aria-label="Company Name" disabled>
+                            <option selected value="">Required</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <hr class="w-75 border border-primary mt-4" style="margin-left: 12.5%;"/>
+            <div class="text-center mt-4 mb-4">
+                <h4>
+                    Transaction Info
+                </h4>
+            </div>
+            <div class="row mt-4 mb-4">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="income_name_of_recipient">Name of Recipient</label>
+                        <input class="form-control" id="income_name_of_recipient" name="income_name_of_recipient" type="text">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="income_date_occured">Transaction Date</label>
+                        <input class="form-control" id="income_date_occured" name="income_date_occured" type="datetime-local">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4 mb-4">
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="income_transaction_amount">Transaction Amount</label>
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input type="text" id = "income_transaction_amount" name="income_transaction_amount" class="form-control" aria-label="Amount (to the nearest dollar)" required>
+                            <span class="input-group-text">.00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3"></div>
+            </div>
+            <div class="row mt-5" style="display: flex; justify-content: space-around;">
+                <button type="button" class="btn btn-secondary ml-2 border border-dark " style="width: 100px;" onclick="clear_income_transaction_form();">Clear</button>
+                <a type="button" href="javascript:void(0);" onclick="create_income_transaction();" class="btn btn-primary border border-dark mr-2" style="width: 100px;">Submit</a>
+            </div>
+        </div>
+    </form>
+</div>

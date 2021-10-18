@@ -2,7 +2,11 @@
 {% load static %}
 
 {% block page_elements %}
-    <div class="bg-light text-center" style="height: 100%;">
-        <p>Welcome to Accounts Page</p>
-    </div>
+                    <div class="row bg-light text-center" style="height: 100%; display: flex; justify-content: center; align-items: center;">
+                        <div class="card bg-secondary" style="width: 90%; height: 90%;">
+                            <div class="card-body">
+                                {% include 'tables/accounts_table.html' %}
+                            </div>
+                        </div>
+                    </div>
 {% endblock %}

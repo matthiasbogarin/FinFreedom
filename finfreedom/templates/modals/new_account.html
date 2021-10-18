@@ -1,0 +1,113 @@
+
+<!-- Create New Account Modal -->
+<div class="modal fade" id="new_account_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+      <div class="modal-content border border-primary">
+        <div class="modal-header border border-primary">
+          <h5 class="modal-title" id="staticBackdropLabel">Create New Account</h5>
+        </div>
+        <div class="modal-body border border-primary">
+            <form id = "create_account_form" method="POST">
+              <div class="text-center mt-2 mb-2">
+                <h4>
+                  Profile Info
+                </h4>
+              </div>
+              <div class="row mb-2">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" maxlength="150" id="email" name="email" class="form-control" onchange="check_if_email_exist(this.value);" required>
+                        <div id = "alert_email_exists"></div>
+                      </div>
+                </div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-6">
+                  <div class="form-group">
+                      <label for="first_name">First Name</label>
+                      <input type="text" maxlength="150" id="first_name" name="first_name" class="form-control" required>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-group">
+                      <label for="last_name">Last Name</label>
+                      <input type="text" maxlength="150" id="last_name" name="last_name" class="form-control" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-4">
+                  <div class="form-group">
+                      <label for="new_username">Username</label>
+                      <input type="text" maxlength="150" id="new_username" name="new_username" class="form-control" required>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="form-group">
+                      <label for="new_password">Password</label>
+                      <input type="password" maxlength="150" id="new_password" name="new_password" class="form-control" required>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="form-group">
+                      <label for="verify_password">Verify Password</label>
+                      <input type="password" maxlength="150" id="verify_password" name="verify_password" onchange="check_if_passwords_match();" class="form-control" required>
+                  </div>
+                </div>
+                <div id = "password_dont_match"></div>
+              </div>
+              <hr class="w-75 border border-primary " style="margin-left: 12.5%;"/>
+              <div class="text-center mt-4 mb-4">
+                <h4>
+                  Employer Info
+                </h4>
+              </div>
+              <div class="row mb-2">
+                <div class="col-6">
+                  <div class="form-group">
+                      <label for="employer_name">Name Of Employer</label>
+                      <input type="text" maxlength="150" id="employer_name" name="employer_name" class="form-control" required>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-group">
+                      <label for="position">Position</label>
+                      <input type="text" maxlength="150" id="position" name="position" class="form-control" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-4">
+                <div class="col-4">
+                  <div class="form-group">
+                    <label for="salary">Salary</label>
+                    <div class="input-group">
+                      <span class="input-group-text">$</span>
+                      <input type="text" id = "salary" name="salary" class="form-control" aria-label="Amount (to the nearest dollar)" required>
+                      <span class="input-group-text">.00</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="form-group">
+                      <label for="income_date">Income Date</label>
+                      <input type="date" maxlength="150" id="income_date" name="income_date" class="form-control" required>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="form-group">
+                      <label for="income_frequency">Income Frequency</label>
+                      <input type="number" maxlength="150" id="income_frequency" name="income_frequency" class="form-control" required>
+                  </div>
+                </div>
+              </div>
+              <hr class="w-100 border border-primary "/>
+              <div class="row" style="display: flex; justify-content: space-around;">
+                <button type="button" class="btn btn-secondary ml-2 border border-dark " style="width: 100px;" data-bs-dismiss="modal">Close</button>
+                <a type="button" href="javascript:void(0);" onclick="submit_new_account();" class="btn btn-primary border border-dark mr-2" style="width: 100px;">Submit</a>
+              </div>
+            </form>
+        </div>
+      </div>
+    </div>
+</div>

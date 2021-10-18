@@ -2,6 +2,7 @@ from django.contrib import auth
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
+from django.views.generic.base import TemplateView
 
 urlpatterns = [
     path('', views.login, name='login'),
@@ -9,7 +10,7 @@ urlpatterns = [
     path('manage/', views.manage, name='manage'),
     path('transactions/', views.transactions, name='transactions'),
     path('subscriptions/', views.subscriptions,name='subscriptions'),
-    path('accounts/', views.accounts, name='accounts'),
+    path('accounts/', views.accounts.as_view(), name='accounts'),
     path('profile/', views.profile, name='profile'),
     path('logout/', views.logout_view, name='logout'),
 
@@ -22,5 +23,8 @@ urlpatterns = [
     #POST Calls
     path('create_account/', views.create_account, name="create_acount"),
     path('get_company_by_type_and_user/', views.get_company_by_type, name="get_company_by_type_and_user"),
-    path('create_transaction/', views.create_transaction, name="create_transaction"),
+    path('create_expense_transaction/', views.create_expense_transaction, name="create_transaction"),
+    path('create_income_transaction/', views.create_income_transaction, name="create_income_transaction"),
+    path('pay_credit_transaction/', views.pay_credit_transaction, name="pay_credit_transaction"),
+    path('transfer_to_savings/', views.transfer_to_savings, name="transfer_to_savings"),
 ]

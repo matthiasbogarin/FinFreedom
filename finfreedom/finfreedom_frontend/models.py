@@ -22,14 +22,15 @@ class Employer(models.Model):
 class Accounts(models.Model):
     account_id = models.AutoField(primary_key=True)
     type_of_account = models.CharField(max_length=20)
-    card_number = models.CharField(max_length=20)
-    expiration_date = models.DateField()
-    security_code = models.IntegerField()
+    card_number = models.CharField(max_length=20, null=True,blank=True)
+    expiration_date = models.DateField(null=True, blank=True)
+    security_code = models.IntegerField(null=True, blank=True)
     name_on_card = models.CharField(max_length=50)
-    company_name = models.CharField(max_length=100)
+    company_name = models.CharField(max_length=100, null=True,blank=True)
     amount_on_card = models.DecimalField(max_digits=100, decimal_places=2,null=True)
-    credit_on_card = models.PositiveIntegerField(null=True)
-    payment_date = models.CharField(max_length=100, null=True)
+    credit_on_card = models.PositiveIntegerField(null=True, blank=True)
+    payment_date = models.CharField(max_length=100, null=True, blank=True)
+    account_name = models.CharField(max_length=100, null=True)
 
 class Transactions(models.Model):
     transaction_id = models.AutoField(primary_key=True)
